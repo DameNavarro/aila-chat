@@ -24,9 +24,6 @@
         "marked": "^15.0.7",
         "sqlite3": "^5.1.7"
     },
-    "devDependencies": {
-        "electron-builder": "^26.0.12"
-    },
     "build": {
         "appId": "com.yourcompany.geminichatbot",
         "productName": "Gemini Chatbot",
