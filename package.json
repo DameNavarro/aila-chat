@@ -19,13 +19,13 @@
         "@google/generative-ai": "^0.24.0",
         "dompurify": "^3.2.4",
         "dotenv": "^16.4.7",
-        "electron": "^35.1.2",
         "jsdom": "^26.0.0",
         "marked": "^15.0.7",
         "sqlite3": "^5.1.7"
     },
      "devDependencies": {
-         "electron-builder": "^26.0.12"
+         "electron-builder": "^26.0.12",
+         "electron": "^35.1.2"
      },
     "build": {
         "appId": "com.yourcompany.geminichatbot",
