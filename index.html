@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Recommended security policy -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:;">
+    <title>Aila the AI Liaison</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Sidebar -->
+        <aside id="sidebar">
+            <!-- *** NEW AI PROFILE SECTION *** -->
+            <div id="ai-profile-card">
+                <img id="ai-avatar-img" src="assets/aila_avatar.png" alt="Aila Avatar"> <!-- UPDATE src IF NEEDED -->
+                <div id="ai-profile-text">
+                    <h3 id="ai-name">Aila</h3>
+                    <p id="ai-status">Online</p> <!-- Default status -->
+                </div>
+            </div>
+            <!-- *** END NEW SECTION *** -->
+            <div id="sidebar-header">
+                <button id="new-chat-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 5V19M5 12H19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                    <span>New Chat</span>
+                </button>
+            </div>
+            <nav id="chat-list-container">
+                <p class="sidebar-heading">Recent</p>
+                <ul id="chat-list">
+                    <!-- Chat list items will be populated here -->
+                    <!-- Example:
+            <li data-chat-id="some-uuid-123" class="active">
+                <span>Chat Title Example</span>
+                <button class="delete-chat-btn" title="Delete chat">✕</button>
+            </li>
+            -->
+                </ul>
+            </nav>
+            <div id="sidebar-footer">
+                <!-- Settings, Help, etc. placeholders -->
+                <button class="sidebar-button">Settings</button>
+                <button class="sidebar-button">Help</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main id="main-content">
+            <!-- Welcome View (Shown initially or when no chat is selected) -->
+            <div id="welcome-view">
+                <!-- Updated Welcome Message -->
+                <h1>Hello, I'm Aila.</h1>
+                <p>How can I help?</p>
+                <!-- End of Updated Welcome Message -->
+            </div>
+
+            <!-- Chat View (Shown when a chat is active) -->
+            <div id="chat-view" class="hidden">
+                <div id="message-list">
+                    <!-- Messages will be appended here -->
+                    <!-- Example:
+            <div class="message model">
+                <div class="message-content">Hello! How can I help you today?</div>
+            </div>
+            <div class="message user">
+                <div class="message-content">Explain quantum physics.</div>
+            </div>
+             -->
+                </div>
+                <div id="input-area">
+                    <textarea id="message-input" placeholder="Ask me anything..." rows="1"></textarea>
+                    <button id="send-button" title="Send message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 14L21 3M21 3L18.343 20.0131C18.2241 20.5867 17.9905 21.1061 17.6169 21.4798C17.2432 21.8534 16.7578 22.0589 16.252 22.061C15.7461 22.0631 15.2626 21.8637 14.891 21.492L10 17M21 3L10 14ZM10 14L3.48704 11.513C2.94254 11.2717 2.50494 10.8289 2.27374 10.2758C2.04254 9.72279 2.03514 9.10131 2.25504 8.55203L5.14304 2.21003C5.3566 1.67273 5.76478 1.2384 6.28635 1.00161C6.80793 0.764819 7.40067 0.741979 7.94304 0.939028L19 5.44003" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Link Renderer Script -->
+    <script src="js/renderer.js" defer></script>
+</body>
+</html>

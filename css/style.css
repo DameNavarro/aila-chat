@@ -1,0 +1,529 @@
+/* --- Reset & Base --- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    /* Dark Theme Variables */
+    --bg-primary: #202123;      /* Main content background */
+    --bg-secondary: #2A2B2E;   /* Sidebar, input, code blocks */
+    --bg-tertiary: #343541;    /* Message bubbles, buttons */
+    --bg-hover: #3A3B3E;       /* Hover states */
+    --text-primary: #ECECEC;
+    --text-secondary: #B0B0B0; /* Less important text, placeholders */
+    --border-color: #4D4D4F;
+    --accent-color: #8E87FF;    /* Example accent */
+    --accent-hover: #7A72E8;
+    --danger-color: #FF5C5C;
+    --danger-hover: #E04848;
+
+    --user-message-bg: var(--bg-secondary); /* Slightly different shade */
+    --model-message-bg: var(--bg-tertiary);
+
+    --font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 12px;
+    --sidebar-width: 260px;
+    --input-area-height: 70px; /* Approximate */
+}
+
+html, body {
+    height: 100%;
+    font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    overflow: hidden; /* Prevent body scroll */
+    font-size: 15px; /* Base font size */
+}
+
+button {
+    font-family: inherit;
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: var(--border-radius-md);
+}
+
+textarea {
+    font-family: inherit;
+    background: none;
+    border: none;
+    color: inherit;
+    resize: none; /* Disable manual resize */
+}
+
+ul {
+    list-style: none;
+}
+
+/* --- Layout --- */
+#app-container {
+    display: flex;
+    height: 100vh; /* Full viewport height */
+}
+
+#sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--bg-secondary);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border-right: 1px solid var(--border-color);
+    padding: 10px;
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+}
+
+#main-content {
+    flex-grow: 1; /* Take remaining space */
+    display: flex;
+    flex-direction: column; /* Stack message list and input area */
+    height: 100%;
+    overflow: hidden; /* Prevent overall main content scroll */
+}
+
+/* --- Sidebar --- */
+/* --- Sidebar AI Profile --- */
+#ai-profile-card {
+    display: flex; /* Arrange image and text side-by-side */
+    align-items: center; /* Vertically center items */
+    gap: 12px; /* Space between image and text */
+    padding: 10px 5px 15px 5px; /* Padding around the card (more bottom padding) */
+    margin-bottom: 10px; /* Space below the card, above the header */
+    /* Optional: Add a border if you want to visually box it */
+    /* border: 1px solid var(
+        --border-color); */
+    /* border-radius: var(--border-radius-md); */
+}
+
+#ai-avatar-img {
+    width: 80px; /* Avatar size */
+    height: 80px;
+    border-radius: var(--border-radius-lg);
+    object-fit: cover; /* Ensure image covers the circle well */
+    flex-shrink: 0; /* Prevent image from shrinking */
+    background-color: var(--bg-tertiary); /* Placeholder bg if image fails */
+    border: 1px solid var(--border-color); /* Optional subtle border */
+}
+
+#ai-profile-text {
+    display: flex;
+    flex-direction: column; /* Stack name and status vertically */
+    overflow: hidden; /* Prevent text overflow issues */
+}
+
+#ai-name {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin: 0;
+    line-height: 1.2;
+    color: var(--text-primary);
+    white-space: nowrap; /* Prevent name wrapping */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ... if name is too long */
+}
+
+#ai-status {
+    font-size: 0.85em;
+    color: var(--text-secondary); /* Use secondary color for status */
+    margin: 2px 0 0 0; /* Small space below name */
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#sidebar-header {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    /* border-bottom: 1px solid var(--border-color);*/
+}
+
+#new-chat-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 12px;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+
+#new-chat-btn:hover {
+    background-color: var(--bg-hover);
+}
+
+#new-chat-btn svg {
+    stroke: var(--text-primary);
+}
+
+#chat-list-container {
+    flex-grow: 1;
+    overflow-y: auto; /* Enable scrolling for chat list */
+    padding-right: 5px; /* Space for scrollbar */
+}
+
+.sidebar-heading {
+    font-size: 0.8em;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    padding-left: 10px; /* Align with list items */
+}
+
+#chat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+#chat-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#chat-list li:hover {
+    background-color: var(--bg-hover);
+}
+
+#chat-list li.active {
+    background-color: var(--bg-tertiary);
+    font-weight: 500;
+}
+
+#chat-list li span {
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 10px;
+}
+
+.delete-chat-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.1em;
+    padding: 2px 4px;
+    line-height: 1;
+    border-radius: var(--border-radius-sm);
+    opacity: 0; /* Hide initially */
+    transition: opacity 0.2s ease, color 0.2s ease;
+    flex-shrink: 0;
+}
+
+#chat-list li:hover .delete-chat-btn {
+    opacity: 0.7; /* Show on hover parent li */
+}
+
+.delete-chat-btn:hover {
+    color: var(--danger-color);
+    opacity: 1;
+}
+
+
+#sidebar-footer {
+    padding-top: 10px;
+    border-top: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    flex-shrink: 0;
+}
+.sidebar-button {
+     text-align: left;
+     padding: 8px 10px;
+     border-radius: var(--border-radius-sm);
+     transition: background-color 0.2s ease;
+}
+.sidebar-button:hover {
+    background-color: var(--bg-hover);
+}
+
+/* --- Main Content Area --- */
+#welcome-view {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 20px;
+    color: var(--text-secondary);
+}
+#welcome-view h1 {
+     color: var(--text-primary);
+     margin-bottom: 10px;
+}
+
+#chat-view {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%; /* Crucial for containing scrollable list and fixed input */
+    overflow: hidden; /* Ensure chat view itself doesn't scroll */
+}
+
+#message-list {
+    flex-grow: 1;
+    overflow-y: auto; /* Enable scrolling for messages */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* --- Message Bubbles --- */
+.message {
+    display: flex;
+    max-width: 75%; /* Max width of message bubbles */
+    word-wrap: break-word; /* Break long words */
+}
+
+.message-content {
+    padding: 10px 15px;
+    border-radius: var(--border-radius-lg);
+    line-height: 1.5;
+}
+
+.message.model {
+    /* AI messages align left */
+    align-self: flex-start;
+    background-color: var(--model-message-bg);
+}
+.message.model .message-content {
+     border-top-left-radius: var(--border-radius-sm); /* Slightly flatten corner */
+}
+
+
+.message.user {
+    /* User messages align right */
+    align-self: flex-end;
+    background-color: var(--user-message-bg);
+}
+.message.user .message-content {
+    border-top-right-radius: var(--border-radius-sm); /* Slightly flatten corner */
+}
+
+
+/* --- Input Area --- */
+#input-area {
+    display: flex;
+    align-items: flex-end; /* Align items to bottom */
+    padding: 15px 20px;
+    background-color: var(--bg-primary); /* Match main background */
+    border-top: 1px solid var(--border-color);
+    gap: 10px;
+    min-height: var(--input-area-height); /* Ensure minimum height */
+    flex-shrink: 0; /* Prevent input area from shrinking */
+}
+
+#message-input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-lg);
+    min-height: 46px; /* Initial height for one line + padding */
+    max-height: 200px; /* Limit expansion */
+    overflow-y: auto; /* Scroll if content exceeds max-height */
+    line-height: 1.4;
+    font-size: 1em; /* Match base font size */
+}
+
+#message-input:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 2px rgba(142, 135, 255, 0.3); /* Subtle focus ring */
+}
+
+#message-input::placeholder {
+    color: var(--text-secondary);
+}
+
+#send-button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius-md);
+    width: 44px; /* Square button */
+    height: 44px; /* Square button */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+    margin-bottom: 1px; /* Align better with textarea bottom */
+}
+#send-button:hover {
+    background-color: var(--accent-hover);
+}
+#send-button:disabled {
+    background-color: var(--bg-tertiary);
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+#send-button svg {
+    stroke: currentColor;
+}
+
+
+/* --- Utility Classes --- */
+.hidden {
+    display: none !important; /* Use !important cautiously */
+}
+
+/* --- Scrollbar Styling (Optional, Webkit based) --- */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-secondary);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--bg-tertiary);
+    border-radius: 4px;
+    border: 2px solid var(--bg-secondary); /* Creates padding around thumb */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--bg-hover);
+}
+
+::-webkit-scrollbar-corner {
+    background: var(--bg-secondary); /* Color of the bottom-right corner */
+}
+
+/* --- Message Content Formatting --- */
+.message-content {
+    padding: 10px 15px;
+    border-radius: var(--border-radius-lg);
+    line-height: 1.5;
+    /* Ensure child elements inherit text color */
+    color: var(--text-primary);
+}
+
+/* Basic Markdown Element Styling */
+.message-content p {
+    margin-bottom: 0.8em; /* Spacing between paragraphs */
+}
+.message-content p:last-child {
+    margin-bottom: 0; /* No extra space after the last paragraph */
+}
+
+.message-content strong,
+.message-content b {
+    font-weight: 600; /* Make bold stand out a bit more */
+}
+
+.message-content em,
+.message-content i {
+    font-style: italic;
+}
+
+/* Lists */
+.message-content ul,
+.message-content ol {
+    margin-left: 25px; /* Indent lists */
+    margin-top: 0.5em;
+    margin-bottom: 0.8em;
+}
+.message-content li {
+    margin-bottom: 0.3em;
+}
+
+/* Code blocks */
+.message-content pre {
+    background-color: var(--bg-primary); /* Slightly darker background */
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: 12px 15px;
+    margin: 0.8em 0;
+    overflow-x: auto; /* Allow horizontal scrolling for long code */
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    font-size: 0.9em;
+    line-height: 1.4;
+    color: var(--text-secondary); /* Different color for code */
+}
+
+/* Inline code */
+.message-content code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    background-color: var(--bg-primary);
+    border-radius: var(--border-radius-sm);
+    padding: 2px 5px;
+    font-size: 0.85em;
+    color: var(--text-secondary);
+}
+/* Avoid background/padding conflict for code inside pre */
+.message-content pre code {
+    background-color: transparent;
+    padding: 0;
+    border-radius: 0;
+    border: none;
+    font-size: inherit; /* Inherit size from pre */
+    color: inherit; /* Inherit color from pre */
+}
+
+/* Links */
+.message-content a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+.message-content a:hover {
+    text-decoration: underline;
+    color: var(--accent-hover);
+}
+
+/* Blockquotes */
+.message-content blockquote {
+    border-left: 3px solid var(--accent-color);
+    padding-left: 15px;
+    margin: 0.8em 0;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+.message-content blockquote p {
+     margin-bottom: 0.3em; /* Less space within blockquote paragraphs */
+}
+
+/* Headings (Optional - Gemini might not use them often in chat) */
+.message-content h1,
+.message-content h2,
+.message-content h3,
+.message-content h4,
+.message-content h5,
+.message-content h6 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    font-weight: 600;
+    line-height: 1.3;
+}
+.message-content h1 { font-size: 1.6em; }
+.message-content h2 { font-size: 1.4em; }
+.message-content h3 { font-size: 1.2em; }
+/* ... add others if needed */
+
+/* Horizontal Rules */
+.message-content hr {
+    border: none;
+    border-top: 1px solid var(--border-color);
+    margin: 1em 0;
+}
